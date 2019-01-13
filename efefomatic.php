@@ -36,8 +36,17 @@ SOFTWARE.
   function efefomatic($path) - converts all md in path to single html output
 */
 
+// EXTEND MARKDOWN
 
-// More entries can be added to the global md array from the calling file.
+// Converts `k'keystroke'modifier+keystroke to <kbd>modifier</kbd>+<kbd>keystroke</kbd>
+$efef_md[] = array( 'name' => 'kbd1', 'from' => "/`k'([^']+?)\+(.+?)\s/s" , 'to' => "<kbd>$1</kbd>+<kbd>$2</kbd>");
+
+// Converts `k'keystroke'   to  <kbd>keystroke</kbd>
+$efef_md[] = array( 'name' => 'kbd2', 'from' => "/`k'(\S+?)\s/s" , 'to' => "<kbd>$1</kbd>");
+
+// Converts `generic-tag'stuff' to <generic-tag>stuff</generic-tag>
+//$efef_md[] = array( 'tag'  => 'kbd2', 'from' => "/`(.+)'(.+?)('|\n)/s" , 'to' => "<$1>$1</$1>"); 
+
 $efef_md[] = array( 'name' => 'hr1', 'from' => '/\n___+/s' , 'to' => "\n<hr>");
 $efef_md[] = array( 'name' => 'hr2', 'from' => '/\n---+/s' , 'to' => "\n<hr>");
 $efef_md[] = array( 'name' => 'hr3', 'from' => '/\n\*\*\*+/s' , 'to' => "\n<hr>");
@@ -57,8 +66,13 @@ $efef_md[] = array( 'name' => 'li', 'from' => '/\n\*(.*?)(?=\n)/s' , 'to' => "\n
 $efef_md[] = array( 'name' => 'bold', 'from' => '/\*\*(.*?)\*\*/s' , 'to' => "<strong>$1</strong>");
 $efef_md[] = array( 'name' => 'italics', 'from' => '/\*(.*?)\*/s' , 'to' => "<em>$1</em>");
 $efef_md[] = array( 'name' => 'precode', 'from' => '/\n```(.*?)```/s' , 'to' => "\n<pre><code>$1</code></pre>\n");
-$efef_md[] = array( 'name' => 'link', 'from' => '/\[(.*?)\]\s*\(\s*(.*?)\s*\)/s' , 'to' => '<a href="$2">$1</a>');
+$efef_md[] = array( 'name' => 'link', 'from' => '/\[([^\n]+?)\]\((\S+?)\)/s' , 'to' => '<a href="$2">$1</a>');
 
+
+// ADD NEW MARKDOWN SHORTCUTS HERE
+
+
+// ============================================================================
 
 function efef_md2html($efef_md_text)
 {
