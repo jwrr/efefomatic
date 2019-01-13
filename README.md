@@ -3,8 +3,7 @@ title: Efefefomatic - the Flat File CMS
 h1: Welcome to Efefomatic
 description: Efefomatic is a flat file CMS offering customizable markdown, templates and YAML front-matter. No dependencies or frameworks.  Just a single file and a simple install.
 author: JWRR
-date: January 11, 2019
-robots:
+date: January 13, 2019
 theme: ../efefomatic/themes/a
 css: ../efefomatic/themes/a/a.css
 ...
@@ -23,6 +22,17 @@ blending content and themes just the way you like it.
 ---
 
 {{ toc }}
+
+<ul><li> <a href="#license">License</a>
+<li> <a href="#pronounciation">Pronounciation</a>
+<li> <a href="#markdown">Markdown</a>
+<li> <a href="#extending-markdown">Extending Markdown</a>
+<li> <a href="#frameworks">Frameworks and Dependencies</a>
+<li> <a href="#00">OO</a>
+<li> <a href="#install">Installation</a>
+<li> <a href="#examples">Examples</a>
+<li> <a href="#tbd">Limitations, Bugs and Issues</a>
+<li> <a href="#view-markdown">View Markdown</a></ul>
 
 <a name="license"></a>
 ## License
@@ -53,7 +63,7 @@ EFF EFF OH MATIC
 * P  One or more blank lines before the text
 * A &lbrack;text&rbrack;&lpar;link&rpar;
 
-<a name"markdown-enhancements"></a>
+<a name="markdown-enhancements"></a>
 ## Markdown Enhancements
 
 * KBD &grave;k&apos;keystroke for a single keystroke
