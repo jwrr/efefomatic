@@ -28,41 +28,44 @@ SOFTWARE.
 
 /* 
   functions:
-  function efef_convert2html($md_text) - converts markdown to html
+  function efef_convert2html($efef_md_text) - converts markdown to html
   function efef_make_toc($text) - converts embedded named anchors to table of contents
   function efef_get_yaml($text) - extracts yaml from md and returns key-value hash
   function efef_remove_yaml($text) - removes yaml from md
-  function efef_template_file($hash) - hash defines template file, content...
+  function efef_replacer_file($hash) - hash defines template file, content...
   function efefomatic($path) - converts all md in path to single html output
 */
 
 
 // More entries can be added to the global md array from the calling file.
-$md[] = array( 'name' => 'br1', 'from' => '/  \n/s' , 'to' => " <br>\n");
-$md[] = array( 'name' => 'br2', 'from' => '/\\\s*\n/s' , 'to' => " <br>\n");
-$md[] = array( 'name' => 'p',  'from' => '/\n\n+(?=\s*[^<*#`\n])/s' , 'to' => "\n\n<p>\n");
-$md[] = array( 'name' => 'p',  'from' => '/\n\n+(?=\s*[^<*#`\n])/s' , 'to' => "\n\n<p>\n");
-$md[] = array( 'name' => 'h6', 'from' => '/\n######(.*?)(?=\n)/s' , 'to' => "\n<h6>$1</h6>\n");
-$md[] = array( 'name' => 'h5', 'from' => '/\n#####(.*?)(?=\n)/s' , 'to' => "\n<h5>$1</h5>\n");
-$md[] = array( 'name' => 'h4', 'from' => '/\n####(.*?)(?=\n)/s' , 'to' => "\n<h4>$1</h4>\n");
-$md[] = array( 'name' => 'h3', 'from' => '/\n###(.*?)(?=\n)/s' , 'to' => "\n<h3>$1</h3>\n");
-$md[] = array( 'name' => 'h2', 'from' => '/##(.*?)(?=\n)/s' , 'to' => "\n<h2>$1</h2>\n");
-$md[] = array( 'name' => 'h1', 'from' => '/\n#(.*?)\n/s' , 'to' => "\n<h1>$1</h1>\n");
-$md[] = array( 'name' => 'ul', 'from' => '/\n\n\*(.*?)(?=\n)/s' , 'to' => "\n<ul><li>$1\n");
-$md[] = array( 'name' => 'eul', 'from' => '/\n\*(.*?)\n(?=\n)/s' , 'to' => "\n<li>$1</ul>\n\n");
-$md[] = array( 'name' => 'li', 'from' => '/\n\*(.*?)(?=\n)/s' , 'to' => "\n<li>$1\n");
-$md[] = array( 'name' => 'bold', 'from' => '/\*\*(.*?)\*\*/s' , 'to' => "<strong>$1</strong>");
-$md[] = array( 'name' => 'italics', 'from' => '/\*(.*?)\*/s' , 'to' => "<em>$1</em>");
-$md[] = array( 'name' => 'precode', 'from' => '/\n```(.*?)```/s' , 'to' => "\n<pre><code>$1</code></pre>\n");
-$md[] = array( 'name' => 'link', 'from' => '/\[(.*?)\]\s*\(\s*(.*?)\s*\)/s' , 'to' => '<a href="$2">$1</a>');
+$efef_md[] = array( 'name' => 'hr1', 'from' => '/\n___+/s' , 'to' => "\n<hr>");
+$efef_md[] = array( 'name' => 'hr2', 'from' => '/\n---+/s' , 'to' => "\n<hr>");
+$efef_md[] = array( 'name' => 'hr3', 'from' => '/\n\*\*\*+/s' , 'to' => "\n<hr>");
+$efef_md[] = array( 'name' => 'br1', 'from' => '/  \n/s' , 'to' => " <br>\n");
+$efef_md[] = array( 'name' => 'br2', 'from' => '/\\\s*\n/s' , 'to' => " <br>\n");
+$efef_md[] = array( 'name' => 'p',  'from' => '/\n\n+(?=\s*[^<*#`\n])/s' , 'to' => "\n\n<p>\n");
+$efef_md[] = array( 'name' => 'p',  'from' => '/\n\n+(?=\s*[^<*#`\n])/s' , 'to' => "\n\n<p>\n");
+$efef_md[] = array( 'name' => 'h6', 'from' => '/\n######(.*?)(?=\n)/s' , 'to' => "\n<h6>$1</h6>\n");
+$efef_md[] = array( 'name' => 'h5', 'from' => '/\n#####(.*?)(?=\n)/s' , 'to' => "\n<h5>$1</h5>\n");
+$efef_md[] = array( 'name' => 'h4', 'from' => '/\n####(.*?)(?=\n)/s' , 'to' => "\n<h4>$1</h4>\n");
+$efef_md[] = array( 'name' => 'h3', 'from' => '/\n###(.*?)(?=\n)/s' , 'to' => "\n<h3>$1</h3>\n");
+$efef_md[] = array( 'name' => 'h2', 'from' => '/##(.*?)(?=\n)/s' , 'to' => "\n<h2>$1</h2>\n");
+$efef_md[] = array( 'name' => 'h1', 'from' => '/\n#(.*?)\n/s' , 'to' => "\n<h1>$1</h1>\n");
+$efef_md[] = array( 'name' => 'ul', 'from' => '/\n\n\*(.*?)(?=\n)/s' , 'to' => "\n<ul><li>$1\n");
+$efef_md[] = array( 'name' => 'eul', 'from' => '/\n\*(.*?)\n(?=\n)/s' , 'to' => "\n<li>$1</ul>\n\n");
+$efef_md[] = array( 'name' => 'li', 'from' => '/\n\*(.*?)(?=\n)/s' , 'to' => "\n<li>$1\n");
+$efef_md[] = array( 'name' => 'bold', 'from' => '/\*\*(.*?)\*\*/s' , 'to' => "<strong>$1</strong>");
+$efef_md[] = array( 'name' => 'italics', 'from' => '/\*(.*?)\*/s' , 'to' => "<em>$1</em>");
+$efef_md[] = array( 'name' => 'precode', 'from' => '/\n```(.*?)```/s' , 'to' => "\n<pre><code>$1</code></pre>\n");
+$efef_md[] = array( 'name' => 'link', 'from' => '/\[(.*?)\]\s*\(\s*(.*?)\s*\)/s' , 'to' => '<a href="$2">$1</a>');
 
 
-function efef_convert2html($md_text)
+function efef_md2html($efef_md_text)
 {
-  global $md;
+  global $efef_md;
 
-  $html_text = $md_text;
-  foreach ($md as $replace) {
+  $html_text = $efef_md_text;
+  foreach ($efef_md as $replace) {
     $name = $replace['name'];
     $from = $replace['from'];
     $to   = $replace['to'];
@@ -97,7 +100,7 @@ function efef_make_toc($text)
     Capture all named anchors (<a name="">") and the following line which
     should be a header.
   */
-  $toc_text = "## Table of Contents\n\n";
+  $toc_text = "\n";
   $num_matches = preg_match_all($toc_aname_regex, $text, $matches, PREG_SET_ORDER);
   for ($i=0; $i<$num_matches; $i++) {
     $toc_anchor = trim($matches[$i][1]);
@@ -176,7 +179,7 @@ function efef_remove_yaml($text)
 
 // ============================================================================
 
-function efef_template_str($template_text, $hash)
+function efef_replacer_str($template_text, $hash)
 {
   $num_matches = preg_match_all('/{{\s*(.*?)\s*}}/' , $template_text , $matches,  PREG_SET_ORDER);
   for ($i=0; $i<$num_matches; $i++) {
@@ -186,18 +189,16 @@ function efef_template_str($template_text, $hash)
   foreach ($uniq as $key => $value) {
     $template_text = preg_replace('/{{\s*' . $key . '\s*}}/' , $hash[$key] , $template_text);
   }
-
   return $template_text;
 }
 
-function efef_template_file($hash)
+function efef_replacer_file($hash)
 {
-  
   $template_path = $hash['theme'];
   $template_name = basename($template_path);
   $template_file = $hash['theme'] . '/' . $template_name . '.html';
   $template_text = file_get_contents($template_file);
-  $final_text = efef_template_str($template_text, $hash);
+  $final_text = efef_replacer_str($template_text, $hash);
   return $final_text;
 }
 
@@ -209,7 +210,6 @@ function efefomatic($file_path = ".")
 
   // get all markdown files in alphabetical order
   $file_list = glob($file_path . DIRECTORY_SEPARATOR . "*.md");
-print $filelist;
   // loop through all markdown files in folder
   foreach ($file_list as $file_name) {
     $file_text =  file_get_contents($file_name);
@@ -218,19 +218,28 @@ print $filelist;
     $hash = efef_get_yaml($file_text);
 
     // remove yaml front matter from md file
-    $md_text = efef_remove_yaml($file_text);
+    $efef_md_text = efef_remove_yaml($file_text);
 
     // make table of contains from named anchors embedded in markdown
-    $md_toc_text = efef_make_toc($md_text);
+    $hash['toc'] = efef_make_toc($efef_md_text);
 
-    // concatenate table of contents and markdown
-    $md_content = $md_toc_text . $md_text;
+    $glob = glob("*", GLOB_ONLYDIR);
+    $efef_md_glob = "\n";
+    foreach ($glob as $dir) {
+      $dir_text = preg_replace("/[-_]/", " ", $dir);
+      $efef_md_glob .= "* [$dir_text]($dir)\n"; 
+    }
+    $efef_md_glob .= "\n";
+    $hash['globdir'] = $efef_md_glob;
+
+    // expand embedded fields such as {{toc}}. $hash has from/to definitions
+    $efef_md_text2 = efef_replacer_str($efef_md_text, $hash);
 
     // convert markdown to html
-    $hash['content'] = efef_convert2html($md_content);
+    $hash['content'] = efef_md2html($efef_md_text2);
 
-    // apply content to template
-    $final_html .= efef_template_file($hash);
+    // apply content to template (template path stored in $hash
+    $final_html .= efef_replacer_file($hash);
   }
   return $final_html;
 }
