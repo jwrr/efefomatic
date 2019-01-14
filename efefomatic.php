@@ -71,6 +71,9 @@ $efef_md[] = array( 'name' => 'link', 'from' => '/\[([^\n]+?)\]\((\S+?)\)/s' , '
 
 // ADD NEW MARKDOWN SHORTCUTS HERE
 
+$URL_PATH = getcwd();
+$EFEF_PATH = dirname(__FILE__);
+$THEMES_PATH = $EFEF_PATH . DIRECTORY_SEPARATOR . "themes";
 
 // ============================================================================
 
@@ -199,8 +202,8 @@ function efef_replacer_str($template_text, $hash)
   for ($i=0; $i<$num_matches; $i++) {
     $uniq[$matches[$i][1]]++;
   }
-
   foreach ($uniq as $key => $value) {
+    # print "key = '$key', value='$value'<br>\n";
     $template_text = preg_replace('/{{\s*' . $key . '\s*}}/' , $hash[$key] , $template_text);
   }
   return $template_text;
@@ -208,10 +211,22 @@ function efef_replacer_str($template_text, $hash)
 
 function efef_replacer_file($hash)
 {
-  $template_path = $hash['theme'];
+  global $THEMES_PATH;
+  if (!array_key_exists('theme', $hash)) {
+    $template_path = $THEMES_PATH . DIRECTORY_SEPARATOR . 'a'; 
+  } elseif (strstr($hash['theme'], DIRECTORY_SEPARATOR)) {
+     $template_path = $hash['theme'];
+  } else {
+     $template_path = $THEMES_PATH . DIRECTORY_SEPARATOR . $hash['theme'];
+  }
   $template_name = basename($template_path);
-  $template_file = $hash['theme'] . '/' . $template_name . '.html';
+  $template_file = $template_path . DIRECTORY_SEPARATOR  . $template_name . '.html';
   $template_text = file_get_contents($template_file);
+
+  if (!array_key_exists('css',$hash)) {
+    $hash['css'] = $hash['theme'] . DIRECTORY_SEPARATOR . $template_name . '.css';
+  }
+
   $final_text = efef_replacer_str($template_text, $hash);
   return $final_text;
 }
