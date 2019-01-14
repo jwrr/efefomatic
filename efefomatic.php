@@ -104,7 +104,7 @@ function efef_md2html($efef_md_text)
   $toc_text- table of contents in markdown.
 */
 
-$toc_aname_regex = "/<a\s+name\s*=\s*\"(.*?)\"\s*>.*?\n\s*##(.*?)\n/s";
+$toc_aname_regex = "/<a\s+name\s*=\s*\"(.*?)\"\s*>.*?\n\s*#+(.*?)\n/s";
 
 function efef_make_toc($text)
 {
