@@ -1,19 +1,86 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>{{ title }}</title>
-  <meta name="description" content="{{ description }}">
-  <meta name="author" content="{{ author }}">
-  <link rel="stylesheet" href="{{ css }}">
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+<meta name="author" content="{{ author }}">
+<link rel="stylesheet" href="{{ css }}">
+<style>
+ /* from https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
+ kbd{
+  -moz-border-radius:3px;
+  -moz-box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+  -webkit-border-radius:3px;
+  -webkit-box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+  background-color:#f7f7f7;
+  border:1px solid #ccc;
+  border-radius:3px;
+  box-shadow:0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+  color:#333;
+  display:inline-block;
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:11px;
+  line-height:1.4;
+  margin:0 .1em;
+  padding:.1em .6em;
+  text-shadow:0 1px 0 #fff;
+ }
+
+ .lrect   { width:336px; height:280px; }
+ .mrect   { width:300px; height:250px; }
+ .srect   { width:180px; height:150px; }
+ .lboard  { width:728px; height:90px;  }
+ .hpage   { width:300px; height:600px; }
+ .mbanner { width:320px; height:100px; }
+ .square  { width:250px; height:250px; }
+ .ssquare { width:200px; height:200px; }
+ .scraper { width:120px; height:600px; }
+ .wscraper{ width:160px; height:600px; }
+
+ .wrapper { font-family: Arial, sans-serif; line-height:1.5em; min-width:470px; max-width:728px; }
+ .header { color: #fcfcfc; background: #888888; border: 1px solid #aaaaaa; margin:0; padding:0.5em 0.4em 0.4em 1em; }
+ .header img { height: 4em; float:right; }
+ code {margin:0; padding:0 0.5em 0 0.5em; border-width:1px; border-style:solid; border-color:#ccc #ccc #ccc #ccc; background:#f0f0f0; overflow-x:auto; font-family: "Courier New", Courier, monospace; }
+ pre code {display:block; margin:0; font-size:0.9em; border-width:3px 3px 3px 4px; border-style:solid; border-color:#ccc #ccc #ccc #ccc; border-radius:1em 1em 1em 1em; background:#f0f0f0; overflow-x:auto; font-family: "Courier New", Courier, monospace; line-height:1em; padding: 0 1em 1em 1em; }
+ blockquote {margin: 1em auto 1em auto; text-align:center; font-style:italic; color:#E67E22; }
+ article {width:calc(100% - 175px); float:left;}
+ article img:first-child {display:inline-block; float:left; width: 180px; margin: 0.5em 1em 0.5em 0; background-color:#880000;}
+ article span {font-size:1.2em;}
+ article li {margin:0 0 0.6em 0; font-size: 1.1em;}
+ .leader {width:728px; height:90px; background-color:#cccccc;}
+ .embedded1 {width:336px; height:280px; background-color:#cccccc; float:right; margin:0.4em 0 0.5em 1em;}
+ .embedded  {width:300px; height:250px; background-color:#cccccc; float:right; margin:0.4em 0 0.5em 1em;}
+ .embedded3 {width:180px; height:1500px; background-color:#cccccc; float:right; margin:0.4em 0 0.5em 1em;}
+ .main-article {float:right; width:100%; }
+ .main-article div { font-size: 1.1em;}
+ .main-article div img { width: 28%; margin: 0 1em 0.5em 0; }
+ .main-article img { float:left; width: 100%; margin-left: auto; margin-right: auto; }
+ .article-img { display: inline-block; float:left; margin: 0 1em 0.5em 0; background-color:#880000;}
+
+
+ aside {float:right; width:165px; margin:0; background-color:#eeeeee; height:10000px; }
+</style>
 </head>
 
+
 <body>
-<header>
+
+<div class="wrapper">
+<div class="leader">leader</div>
+
+<div class="header">
+<img src="img/logo.gif">
 <h1>{{ h1 }}</h1>
-</header>
+</div>
+
 <article>
-{{ content }}
+ {{ content }}
 </article>
+
+
+<aside>
+</aside>
+</div>
 </body>
 </html>

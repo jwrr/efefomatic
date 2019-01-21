@@ -4,9 +4,7 @@ h1: Welcome to efefomatic
 description: efefomatic welcome page.
 author: JWRR
 date: January 11, 2019
-robots:
-theme: efefomatic/themes/a
-css: efefomatic/themes/a/a.css
+theme: a
 ...
 
 {{ globdir }}

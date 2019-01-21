@@ -4,8 +4,7 @@ h1: Welcome to Efefomatic
 description: Efefomatic is a flat file CMS offering customizable markdown, templates and YAML front-matter. No dependencies or frameworks.  Just a single file and a simple install.
 author: JWRR
 date: January 13, 2019
-theme: ../efefomatic/themes/a
-css: ../efefomatic/themes/a/a.css
+theme: a
 ...
 
 # Efefomatic

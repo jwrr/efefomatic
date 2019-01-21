@@ -1,5 +1,4 @@
 <?php
-
 /*
 MIT License
 
@@ -26,7 +25,7 @@ SOFTWARE.
 */
 
 
-/* 
+/*
   functions:
   function efef_convert2html($efef_md_text) - converts markdown to html
   function efef_make_toc($text) - converts embedded named anchors to table of contents
@@ -45,31 +44,65 @@ $efef_md[] = array( 'name' => 'kbd1', 'from' => "/`k'([^']+?)\+(.+?)\s/s" , 'to'
 $efef_md[] = array( 'name' => 'kbd2', 'from' => "/`k'(\S+?)\s/s" , 'to' => "<kbd>$1</kbd>");
 
 // Converts `generic-tag'stuff' to <generic-tag>stuff</generic-tag>
-//$efef_md[] = array( 'tag'  => 'kbd2', 'from' => "/`(.+)'(.+?)('|\n)/s" , 'to' => "<$1>$1</$1>"); 
+//$efef_md[] = array( 'tag'  => 'kbd2', 'from' => "/`(.+)'(.+?)('|\n)/s" , 'to' => "<$1>$1</$1>");
 
-$efef_md[] = array( 'name' => 'hr1', 'from' => '/\n___+/s' , 'to' => "\n<hr>");
-$efef_md[] = array( 'name' => 'hr2', 'from' => '/\n---+/s' , 'to' => "\n<hr>");
-$efef_md[] = array( 'name' => 'hr3', 'from' => '/\n\*\*\*+/s' , 'to' => "\n<hr>");
-$efef_md[] = array( 'name' => 'br1', 'from' => '/  \n/s' , 'to' => " <br>\n");
-$efef_md[] = array( 'name' => 'br2', 'from' => '/\\\s*\n/s' , 'to' => " <br>\n");
-$efef_md[] = array( 'name' => 'p',  'from' => '/\n\n+(?=\s*[^<*#`\n])/s' , 'to' => "\n\n<p>\n");
-$efef_md[] = array( 'name' => 'p',  'from' => '/\n\n+(?=\s*[^<*#`\n])/s' , 'to' => "\n\n<p>\n");
-$efef_md[] = array( 'name' => 'h6', 'from' => '/\n######(.*?)(?=\n)/s' , 'to' => "\n<h6>$1</h6>\n");
-$efef_md[] = array( 'name' => 'h5', 'from' => '/\n#####(.*?)(?=\n)/s' , 'to' => "\n<h5>$1</h5>\n");
-$efef_md[] = array( 'name' => 'h4', 'from' => '/\n####(.*?)(?=\n)/s' , 'to' => "\n<h4>$1</h4>\n");
-$efef_md[] = array( 'name' => 'h3', 'from' => '/\n###(.*?)(?=\n)/s' , 'to' => "\n<h3>$1</h3>\n");
-$efef_md[] = array( 'name' => 'h2', 'from' => '/##(.*?)(?=\n)/s' , 'to' => "\n<h2>$1</h2>\n");
-$efef_md[] = array( 'name' => 'h1', 'from' => '/\n#(.*?)\n/s' , 'to' => "\n<h1>$1</h1>\n");
-$efef_md[] = array( 'name' => 'ul', 'from' => '/\n\n\*(.*?)(?=\n)/s' , 'to' => "\n<ul><li>$1\n");
-$efef_md[] = array( 'name' => 'eul', 'from' => '/\n\*(.*?)\n(?=\n)/s' , 'to' => "\n<li>$1</ul>\n\n");
-$efef_md[] = array( 'name' => 'li', 'from' => '/\n\*(.*?)(?=\n)/s' , 'to' => "\n<li>$1\n");
-$efef_md[] = array( 'name' => 'bold', 'from' => '/\*\*(.*?)\*\*/s' , 'to' => "<strong>$1</strong>");
-$efef_md[] = array( 'name' => 'italics', 'from' => '/\*(.*?)\*/s' , 'to' => "<em>$1</em>");
-$efef_md[] = array( 'name' => 'precode', 'from' => '/\n```(.*?)```/s' , 'to' => "\n<pre><code>$1</code></pre>\n");
-$efef_md[] = array( 'name' => 'link', 'from' => '/\[([^\n]+?)\]\((\S+?)\)/s' , 'to' => '<a href="$2">$1</a>');
+$efef_md[] = array( 'name' => 'hr1', 'from' => '/\n\n___+/s' , 'to' => "\n\n<hr>");
+$efef_md[] = array( 'name' => 'hr2', 'from' => '/\n\n---+/s' , 'to' => "\n\n<hr>");
+$efef_md[] = array( 'name' => 'hr3', 'from' => '/\n\n\*\*\*+/s' , 'to' => "\n\n<hr>");
+// $efef_md[] = array( 'name' => 'br1', 'from' => '/  \n/s' , 'to' => " <br>\n");
+
+$efef_md[] = array( 'name' => 'h2b', 'from' => '/\n\n([^\n]+?)\n---+\n/s' , 'to' => "\n\n<h2>$1</h2>\n");
+$efef_md[] = array( 'name' => 'h1b', 'from' => '/\n\n([^\n]+?)\n===+\n/s' , 'to' => "\n\n<h1>$1</h1>\n");
+
+// Convert trailing '\' into '<br>'
+$efef_md[] = array( 'name' => 'br2', 'from' => "/([^\\\\])[\\\\]\n/s" , 'to' => "<br>\n");
+
+// Convert trailing '\.' into '\' - This prevents <br>
+#### $efef_md[] = array( 'name' => 'br3', 'from' => '/\\\\\n/s' , 'to' => "\\\n");
+$efef_md[] = array( 'name' => 'p1',  'from' => '/\n\n+(?=[^- <>*#`0-9+])/s' , 'to' => "\n\n<p>\n");
+
+// remove char if line just has one '.'. This prevents <p>
+$efef_md[] = array( 'name' => 'p2',  'from' => '/\n[.]\n/s' , 'to' => "\n\n");
+
+
+$efef_md[] = array( 'name' => 'h6',  'from' => '/\n######(.*?)(?=\n)/s' , 'to' => "\n<h6>$1</h6>\n");
+$efef_md[] = array( 'name' => 'h5',  'from' => '/\n#####(.*?)(?=\n)/s' , 'to' => "\n<h5>$1</h5>\n");
+$efef_md[] = array( 'name' => 'h4',  'from' => '/\n####(.*?)(?=\n)/s' , 'to' => "\n<h4>$1</h4>\n");
+$efef_md[] = array( 'name' => 'h3',  'from' => '/\n###(.*?)(?=\n)/s' , 'to' => "\n<h3>$1</h3>\n");
+$efef_md[] = array( 'name' => 'h2',  'from' => '/##(.*?)(?=\n)/s' , 'to' => "\n<h2>$1</h2>\n");
+$efef_md[] = array( 'name' => 'h1',  'from' => '/\n#(.*?)\n/s' , 'to' => "\n<h1>$1</h1>\n");
+
+$efef_md[] = array( 'name' => 'ul',  'from' => '/\n\n[-+*](.*?)(?=\n)/s' , 'to' => "\n<ul><li>$1\n");
+$efef_md[] = array( 'name' => 'eul', 'from' => '/\n[-+*](.*?)\n(?=\n)/s' , 'to' => "\n<li>$1</ul>\n\n");
+$efef_md[] = array( 'name' => 'uli', 'from' => '/\n[-+*](.*?)(?=\n)/s' , 'to' => "\n<li>$1\n");
+
+$efef_md[] = array( 'name' => 'ol',  'from' => '/\n\n\d+[.)]\s*(.*?)(?=\n)/s' , 'to' => "\n<ol><li>$1\n");
+$efef_md[] = array( 'name' => 'eol', 'from' => '/\n\d+[.)]\s*(.*?)\n(?=\n)/s' , 'to' => "\n<li>$1</ol>\n\n");
+$efef_md[] = array( 'name' => 'oli', 'from' => '/\n\d+[.)]\s*(.*?)(?=\n)/s' , 'to' => "\n<li>$1\n");
+
+$efef_md[] = array( 'name' => 'bold1',   'from' => '/\s\*\*(.*?)\*\*/s' , 'to' => " <strong>$1</strong>");
+$efef_md[] = array( 'name' => 'bold2',   'from' => '/\s__(.*?)__/s' , 'to' => " <strong>$1</strong>");
+$efef_md[] = array( 'name' => 'italics1','from' => '/\s\*(.*?)\*/s' , 'to' => " <em>$1</em>");
+$efef_md[] = array( 'name' => 'italics2','from' => '/\s_(.*?)_/s' , 'to' => " <em>$1</em>");
+$efef_md[] = array( 'name' => 'precode1','from' => '/\n```(.*?)```/s' , 'to' => "\n<pre><code>$1</code></pre>\n");
+$efef_md[] = array( 'name' => 'precode2','from' => '/\n\n    (.*?)\n\n/s' , 'to' => "\n<pre><code>\n    $1\n</code></pre>\n\n");
+
+$efef_md[] = array( 'name' => 'blockquote1','from' => '/\n\n>(.*?)\n\n/s' , 'to' => "\n<blockquote>\n$1\n</blockquote>\n\n");
+$efef_md[] = array( 'name' => 'blockquote2','from' => '/\n>/s' , 'to' => "\n");
+
+
+$efef_md[] = array( 'name' => 'img1',    'from' => '/!\[([^\n]+?)\]\((\S+?)\)/s' , 'to' => '<img src="$2" alt="$1">');
+$efef_md[] = array( 'name' => 'img2',    'from' => "/!<(\S+?)>/si" , 'to' => '<img src="$1" alt="$1">');
+
+$efef_md[] = array( 'name' => 'link1',   'from' => '/\[([^\n]+?)\]\((\S+?)\)/s' , 'to' => '<a href="$2">$1</a>');
+$efef_md[] = array( 'name' => 'link2',   'from' => "/<(http\S+?)>/si" , 'to' => '<a href="$1">$1</a>');
+$efef_md[] = array( 'name' => 'code',    'from' => "/`([^\n]+?)`/s" , 'to' => '<code>$1</code>');
 
 
 // ADD NEW MARKDOWN SHORTCUTS HERE
+
+$efef_md[] = array( 'name' => 'tab', 'from' => "/\t/s" , 'to' => '&Tab;');
+
 
 $URL_PATH = getcwd();
 $EFEF_PATH = dirname(__FILE__);
@@ -96,7 +129,7 @@ function efef_md2html($efef_md_text)
 
 // ============================================================================
 
-/* 
+/*
   function efef_make_toc
   Capture all anchored anchors and create a table of contents.
 
@@ -129,9 +162,9 @@ function efef_make_toc($text)
 }
 
 // ============================================================================
-/* 
-  function get_yaml 
-  Capture all Yaml blocks and concatenate them into a single string.  Yaml 
+/*
+  function get_yaml
+  Capture all Yaml blocks and concatenate them into a single string.  Yaml
   blocks start with '---' and end with either '---' or '...'.
 
   Arguments:
@@ -152,7 +185,7 @@ function efef_get_yaml($text)
   global $yaml_comment_regex;
 
   /*
-    Capture all Yaml blocks and concatenate them into a single string.  Yaml 
+    Capture all Yaml blocks and concatenate them into a single string.  Yaml
     blocks start with '---' and end with either '---' or '...'.
   */
   $yaml_text = "";
@@ -169,10 +202,10 @@ function efef_get_yaml($text)
 
   /*
     Store each Yaml entry in a key-value hash.  An entry ends with an '\n' that
-    is not followed by an indented line.  Indented lines are considered part of 
+    is not followed by an indented line.  Indented lines are considered part of
     preceding line's value.
   */
-  $num_matches = preg_match_all($yaml_item_regex, $yaml_text, $matches, PREG_SET_ORDER);  
+  $num_matches = preg_match_all($yaml_item_regex, $yaml_text, $matches, PREG_SET_ORDER);
   for ($i=0; $i<$num_matches; $i++) {
     $yaml_item = $matches[$i][1];
     if (preg_match("/:/", $yaml_item)) {
@@ -188,7 +221,7 @@ function efef_get_yaml($text)
 // ============================================================================
 
 function efef_remove_yaml($text)
-{ 
+{
   global $yaml_regex;
   $text = preg_replace($yaml_regex, "", $text);
   return $text;
@@ -203,7 +236,7 @@ function efef_replacer_str($template_text, $hash)
     $uniq[$matches[$i][1]]++;
   }
   foreach ($uniq as $key => $value) {
-    # print "key = '$key', value='$value'<br>\n";
+    // print "key = '$key', value='$value'<br>\n";
     $template_text = preg_replace('/{{\s*' . $key . '\s*}}/' , $hash[$key] , $template_text);
   }
   return $template_text;
@@ -213,7 +246,7 @@ function efef_replacer_file($hash)
 {
   global $THEMES_PATH;
   if (!array_key_exists('theme', $hash)) {
-    $template_path = $THEMES_PATH . DIRECTORY_SEPARATOR . 'a'; 
+    $template_path = $THEMES_PATH . DIRECTORY_SEPARATOR . 'a';
   } elseif (strstr($hash['theme'], DIRECTORY_SEPARATOR)) {
      $template_path = $hash['theme'];
   } else {
@@ -224,7 +257,7 @@ function efef_replacer_file($hash)
   $template_text = file_get_contents($template_file);
 
   if (!array_key_exists('css',$hash)) {
-    $hash['css'] = $hash['theme'] . DIRECTORY_SEPARATOR . $template_name . '.css';
+    $hash['css'] = $template_path . DIRECTORY_SEPARATOR . $template_name . '.css';
   }
 
   $final_text = efef_replacer_str($template_text, $hash);
@@ -256,7 +289,7 @@ function efefomatic($file_path = ".")
     $efef_md_glob = "\n";
     foreach ($glob as $dir) {
       $dir_text = preg_replace("/[-_]/", " ", $dir);
-      $efef_md_glob .= "* [$dir_text]($dir)\n"; 
+      $efef_md_glob .= "* [$dir_text]($dir)\n";
     }
     $efef_md_glob .= "\n";
     $hash['globdir'] = $efef_md_glob;
