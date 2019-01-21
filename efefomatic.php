@@ -37,6 +37,11 @@ SOFTWARE.
 
 // EXTEND MARKDOWN
 
+$efef_md[] = array( 'name' => 'esc-ast',   'from' => '/[\\\\][*]/s' , 'to' => "&ast;");
+$efef_md[] = array( 'name' => 'esc-num',   'from' => '/[\\\\][#]/s' , 'to' => "&num;");
+$efef_md[] = array( 'name' => 'esc-hat',   'from' => '/[\\\\]\^/s'  , 'to' => "&Hat;");
+$efef_md[] = array( 'name' => 'esc-tilde', 'from' => '/[\\\\][~]/s' , 'to' => "&tilde;");
+
 // Converts `k'keystroke'modifier+keystroke to <kbd>modifier</kbd>+<kbd>keystroke</kbd>
 $efef_md[] = array( 'name' => 'kbd1', 'from' => "/`k'([^']+?)\+(.+?)\s/s" , 'to' => "<kbd>$1</kbd>+<kbd>$2</kbd>");
 
@@ -45,6 +50,7 @@ $efef_md[] = array( 'name' => 'kbd2', 'from' => "/`k'(\S+?)\s/s" , 'to' => "<kbd
 
 // Converts `generic-tag'stuff' to <generic-tag>stuff</generic-tag>
 //$efef_md[] = array( 'tag'  => 'kbd2', 'from' => "/`(.+)'(.+?)('|\n)/s" , 'to' => "<$1>$1</$1>");
+
 
 $efef_md[] = array( 'name' => 'hr1', 'from' => '/\n\n___+/s' , 'to' => "\n\n<hr>");
 $efef_md[] = array( 'name' => 'hr2', 'from' => '/\n\n---+/s' , 'to' => "\n\n<hr>");
@@ -81,9 +87,9 @@ $efef_md[] = array( 'name' => 'eol', 'from' => '/\n\d+[.)]\s*(.*?)\n(?=\n)/s' , 
 $efef_md[] = array( 'name' => 'oli', 'from' => '/\n\d+[.)]\s*(.*?)(?=\n)/s' , 'to' => "\n<li>$1\n");
 
 $efef_md[] = array( 'name' => 'bold1',   'from' => '/\s\*\*(.*?)\*\*/s' , 'to' => " <strong>$1</strong>");
-$efef_md[] = array( 'name' => 'bold2',   'from' => '/\s__(.*?)__/s' , 'to' => " <strong>$1</strong>");
-$efef_md[] = array( 'name' => 'italics1','from' => '/\s\*(.*?)\*/s' , 'to' => " <em>$1</em>");
-$efef_md[] = array( 'name' => 'italics2','from' => '/\s_(.*?)_/s' , 'to' => " <em>$1</em>");
+$efef_md[] = array( 'name' => 'bold2',   'from' => '/\s__([^_].+?)__/s' , 'to' => " <strong>$1</strong>");
+$efef_md[] = array( 'name' => 'em1',     'from' => '/\s\*(.*?)\*/s' , 'to' => " <em>$1</em>");
+$efef_md[] = array( 'name' => 'em2',     'from' => '/\s_([^_].*?)_/s' , 'to' => " <em>$1</em>");
 $efef_md[] = array( 'name' => 'precode1','from' => '/\n```(.*?)```/s' , 'to' => "\n<pre><code>$1</code></pre>\n");
 $efef_md[] = array( 'name' => 'precode2','from' => '/\n\n    (.*?)\n\n/s' , 'to' => "\n<pre><code>\n    $1\n</code></pre>\n\n");
 
@@ -98,11 +104,15 @@ $efef_md[] = array( 'name' => 'link1',   'from' => '/\[([^\n]+?)\]\((\S+?)\)/s' 
 $efef_md[] = array( 'name' => 'link2',   'from' => "/<(http\S+?)>/si" , 'to' => '<a href="$1">$1</a>');
 $efef_md[] = array( 'name' => 'code',    'from' => "/`([^\n]+?)`/s" , 'to' => '<code>$1</code>');
 
-
 // ADD NEW MARKDOWN SHORTCUTS HERE
 
-$efef_md[] = array( 'name' => 'tab', 'from' => "/\t/s" , 'to' => '&Tab;');
+$efef_md[] = array( 'name' => 'tab',    'from' => "/\t/s" , 'to' => '&Tab;');
+$efef_md[] = array( 'name' => 's',      'from' => "/\s~~([^~]*?)~~(?=[\p{P}\s])/s"   , 'to' => ' <s>$1</s>');
+$efef_md[] = array( 'name' => 'mark',   'from' => "/\s==([^~]*?)==(?=[\p{P}\s])/s"   , 'to' => ' <mark>$1</mark>');
+$efef_md[] = array( 'name' => 'u',      'from' => "/\s___([^_]*?)___(?=[\p{P}\s])/s" , 'to' => ' <u>$1</u>');
 
+$efef_md[] = array( 'name' => 'sup1',   'from' => "/(\S)\^(\S)(\s)/s" , 'to' => '$1<sup>$2</sup>$3');
+$efef_md[] = array( 'name' => 'sup2',   'from' => "/(\S)\^(.+?)\^/s"  , 'to' => '$1<sup>$2</sup>');
 
 $URL_PATH = getcwd();
 $EFEF_PATH = dirname(__FILE__);
