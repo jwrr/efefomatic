@@ -108,11 +108,14 @@ $efef_md[] = array( 'name' => 'code',    'from' => "/`([^\n]+?)`/s" , 'to' => '<
 
 $efef_md[] = array( 'name' => 'tab',    'from' => "/\t/s" , 'to' => '&Tab;');
 $efef_md[] = array( 'name' => 's',      'from' => "/\s~~([^~]*?)~~(?=[\p{P}\s])/s"   , 'to' => ' <s>$1</s>');
-$efef_md[] = array( 'name' => 'mark',   'from' => "/\s==([^~]*?)==(?=[\p{P}\s])/s"   , 'to' => ' <mark>$1</mark>');
+$efef_md[] = array( 'name' => 'mark',   'from' => "/\s==([^=]*?)==(?=[\p{P}\s])/s"   , 'to' => ' <mark>$1</mark>');
 $efef_md[] = array( 'name' => 'u',      'from' => "/\s___([^_]*?)___(?=[\p{P}\s])/s" , 'to' => ' <u>$1</u>');
 
 $efef_md[] = array( 'name' => 'sup1',   'from' => "/(\S)\^(\S)(\s)/s" , 'to' => '$1<sup>$2</sup>$3');
 $efef_md[] = array( 'name' => 'sup2',   'from' => "/(\S)\^(.+?)\^/s"  , 'to' => '$1<sup>$2</sup>');
+
+$efef_md[] = array( 'name' => 'sup2',   'from' => "/([^'])''([^'])/s"  , 'to' => '$1&apos;$2');
+
 
 $URL_PATH = getcwd();
 $EFEF_PATH = dirname(__FILE__);
