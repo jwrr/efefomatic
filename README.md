@@ -11,7 +11,7 @@ theme: a
 ## Description
 Efefomatic is a Flat File CMS providing:
 
-* A useful subset of markdown plus a few nice features such as a KBD shortcut 
+* A useful subset of markdown plus a few nice features such as a KBD shortcut
 * Templates with variable syntax similar to twig and liquid,  &lbrace;&lbrace; var &rbrace;&rbrace;
 * YAML defines front matter such as Title, Author, date, theme...
 
@@ -65,28 +65,35 @@ EFF EFF OH MATIC
 <a name="markdown-enhancements"></a>
 ## Markdown Enhancements
 
+* &tilde;&tilde;<s>strike-through</s>&tilde;&tilde; - Two tildes to strike-through
+* &equals;&equals;<mark>highlight</mark>&equals;&equals; - Two equals to highlight
+* &lowbar;&lowbar;&lowbar;<u>underline</u>&lowbar;&lowbar;&lowbar; - Three underscores to underline
+* Exponents: x^2 -> x<sup>2</sup> ; x^abc^ -> x<sup>abc</sup>
+* Responsive iframe: paste Youtube iframe. efefomatic will make it's size scalable
+* Anchored header: &equals;&equals;@ converts to &lt;a href="first-word-of-header"&gt;&lt;/a&gt;&lt;h2&gt;header&lt;/h2&gt;
 * KBD &grave;k&apos;keystroke for a single keystroke
 * KBD &grave;k&apos;modifier+keystroke for a two-stroke sequence
 
 <a name="extending-markdown"></a>
 ## Extending Markdown
 
-You to easily add new, custom markdown features.  At the top of efefomatic.php 
-is an array of regular expressions. You can add more regular expressions here
-or directly in your application.
+Just as I have made the above enhancements, you to easily add new, custom
+markdown features.  At the top of efefomatic.php is an array of regular
+expressions. You can add more regular expressions here or directly in your
+application.
 
 The following example simplifies the HTML KBD keystroke sequence. It converts
-the sequence <b>`k&apos;keystroke</b> to 
+the sequence <b>`k&apos;keystroke</b> to
 <b>&lt;kbd>keystroke&lt;/kbd></b>. Note, there is no magic associate with the
 back-tick or single-quote.  I just chose them because the sequence is unlikely
-to collide with other markdown features. You can choose whatever you want when 
+to collide with other markdown features. You can choose whatever you want when
 you add features.
 
 ```
 $efef_md[] = array( 'name' => 'kbd', 'from' => "/`k&apos;(.+?)\s/s" , 'to' => "&lt;kbd>&#36;1&lt;/kbd>");
 ```
 The following example is a little more complex and handles a keystroke
-combination. It converts the sequence 
+combination. It converts the sequence
 <b>`k&apos;modifier+keystroke</b> to
 <b>&lt;kbd>modifier&lt;/kbd>+&lt;kbd>keystroke&lt;/kbd></b>.
 
@@ -99,7 +106,7 @@ $efef_md[] = array( 'name' => 'kbd2', 'from' => "/`k&apos;(.+?)\+(.+?)&apos;/s" 
 
 <a name="frameworks"></a>
 ## Frameworks and Dependencies
-What's a framework?  
+What's a framework?
 Efefomatic is one PHP file. One file to rule them all.
 
 <a name="00"></a>

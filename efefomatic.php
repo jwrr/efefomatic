@@ -114,7 +114,7 @@ $efef_md[] = array( 'name' => 'u',      'from' => "/\s___([^_]*?)___(?=[\p{P}\s]
 $efef_md[] = array( 'name' => 'sup1',   'from' => "/(\S)\^(\S)(\s)/s" , 'to' => '$1<sup>$2</sup>$3');
 $efef_md[] = array( 'name' => 'sup2',   'from' => "/(\S)\^(.+?)\^/s"  , 'to' => '$1<sup>$2</sup>');
 
-$efef_md[] = array( 'name' => 'sup2',   'from' => "/([^'])''([^'])/s"  , 'to' => '$1&apos;$2');
+$efef_md[] = array( 'name' => 'quote',  'from' => "/([^'])''([^'])/s"  , 'to' => '$1&apos;$2');
 
 $efef_md[] = array( 'name' => 'video',  'from' => "/<iframe\s*wid.*?height.*?(src.*?iframe.)/s"  ,
 'to' => '<div style="position:relative; width:100%; max-width:560px; height:0px; padding-bottom:56.25%;"><iframe style="position:absolute; left:0; top:0; width:100%; height:100%" $1</div>');
