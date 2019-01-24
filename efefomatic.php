@@ -116,6 +116,18 @@ $efef_md[] = array( 'name' => 'sup2',   'from' => "/(\S)\^(.+?)\^/s"  , 'to' => 
 
 $efef_md[] = array( 'name' => 'sup2',   'from' => "/([^'])''([^'])/s"  , 'to' => '$1&apos;$2');
 
+$efef_md[] = array( 'name' => 'video',  'from' => "/<iframe\s*wid.*?height.*?(src.*?iframe.)/s"  ,
+'to' => '<div style="position:relative; width:100%; max-width:560px; height:0px; padding-bottom:56.25%;"><iframe style="position:absolute; left:0; top:0; width:100%; height:100%" $1</div>');
+
+$efef_md[] = array( 'name' => 'anchor', 'from' => "/(<h.>)@\s*([^<\s]+)(.*?<.h.>)/s"  , 'to' => "\n" . '<a name="$2"></a>' . "\n" . '$1$2$3');
+
+
+// <iframe width="560" height="315" src="https://www.youtube.com/embed/8C4lK41SX-Q" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+//<div style="position:relative; width:100%; max-width:560px; height:0px; padding-bottom:56.25%;">
+// <iframe style="position:absolute; left:0; top:0; width:100%; height:100%"
+//         src="https://www.youtube.com/embed/2HKTx5WFcs0"
+//         frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 $URL_PATH = getcwd();
 $EFEF_PATH = dirname(__FILE__);
@@ -153,7 +165,14 @@ function efef_md2html($efef_md_text)
   $toc_text- table of contents in markdown.
 */
 
-$toc_aname_regex = "/<a\s+name\s*=\s*\"(.*?)\"\s*>.*?\n\s*#+(.*?)\n/s";
+// $toc_aname_regex = "/<a\s+name\s*=\s*\"(.*?)\"\s*>.*?\n\s*#+(.*?)\n/s";
+
+$toc_aname_regex = "/<a\s+name\s*=\s*\"(.*?)\".*?\n\s*<h.>(.*?)<.h.>/s";
+
+/*
+<a name="install-verilog-on-ubuntu"></a>
+<h2> Install Verilog on Ubuntu 18.04 Bionic</h2>
+*/
 
 function efef_make_toc($text)
 {
@@ -163,14 +182,17 @@ function efef_make_toc($text)
     Capture all named anchors (<a name="">") and the following line which
     should be a header.
   */
-  $toc_text = "\n";
+
+  $toc_text = "\n<div class=\"toc\">\n<h2>Table of Contents</h2>\n";
+  $toc_text .= "\n<div>embedded</div>\n<ul>\n";
   $num_matches = preg_match_all($toc_aname_regex, $text, $matches, PREG_SET_ORDER);
   for ($i=0; $i<$num_matches; $i++) {
     $toc_anchor = trim($matches[$i][1]);
     $toc_title  = trim($matches[$i][2]);
-    $toc_text .= "* [$toc_title](#$toc_anchor)\n";
+//    $toc_text .= "* [$toc_title](#$toc_anchor)\n";
+    $toc_text .= "<li><a href=\"#$toc_anchor\">$toc_title</a>\n";
   }
-  $toc_text .= "\n\n\n";
+  $toc_text .= "</ul>\n</div>\n";
   return $toc_text;
 }
 
@@ -295,23 +317,25 @@ function efefomatic($file_path = ".")
     // remove yaml front matter from md file
     $efef_md_text = efef_remove_yaml($file_text);
 
-    // make table of contains from named anchors embedded in markdown
-    $hash['toc'] = efef_make_toc($efef_md_text);
 
     $glob = glob("*", GLOB_ONLYDIR);
-    $efef_md_glob = "\n";
+    $efef_md_glob = "\n<ul>";
     foreach ($glob as $dir) {
       $dir_text = preg_replace("/[-_]/", " ", $dir);
-      $efef_md_glob .= "* [$dir_text]($dir)\n";
+      $efef_md_glob .= "<li><a href=\"$dir\">$dir_text</a>\n";
     }
-    $efef_md_glob .= "\n";
+    $efef_md_glob .= "</ul>\n";
     $hash['globdir'] = $efef_md_glob;
 
-    // expand embedded fields such as {{toc}}. $hash has from/to definitions
-    $efef_md_text2 = efef_replacer_str($efef_md_text, $hash);
-
     // convert markdown to html
-    $hash['content'] = efef_md2html($efef_md_text2);
+    $hash['content'] = efef_md2html($efef_md_text);
+
+    // make table of contains from named anchors embedded in markdown
+    $hash['toc'] = efef_make_toc( $hash['content'] );
+
+
+    // expand embedded fields such as {{toc}}. $hash has from/to definitions
+    $hash['content'] = efef_replacer_str($hash['content'], $hash);
 
     // apply content to template (template path stored in $hash
     $final_html .= efef_replacer_file($hash);

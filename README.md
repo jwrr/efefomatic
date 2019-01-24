@@ -39,7 +39,7 @@ MIT License
 
 <a name="pronounciation"></a>
 ## Pronounciation
-It's pronounced just like it's spelt.  
+It's pronounced just like it's spelt.\
 EFF EFF OH MATIC
 
 <a name="markdown"></a>
