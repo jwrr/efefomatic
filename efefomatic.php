@@ -52,9 +52,7 @@ $efef_md[] = array( 'name' => 'kbd2', 'from' => "/`k'(\S+?)\s/s" , 'to' => "<kbd
 //$efef_md[] = array( 'tag'  => 'kbd2', 'from' => "/`(.+)'(.+?)('|\n)/s" , 'to' => "<$1>$1</$1>");
 
 
-$efef_md[] = array( 'name' => 'hr1', 'from' => '/\n\n___+/s' , 'to' => "\n\n<hr>");
-$efef_md[] = array( 'name' => 'hr2', 'from' => '/\n\n---+/s' , 'to' => "\n\n<hr>");
-$efef_md[] = array( 'name' => 'hr3', 'from' => '/\n\n\*\*\*+/s' , 'to' => "\n\n<hr>");
+$efef_md[] = array( 'name' => 'hr1', 'from' => '/\n([-_*])\\1\\1+\n/s' , 'to' => "\n<hr>\n");
 // $efef_md[] = array( 'name' => 'br1', 'from' => '/  \n/s' , 'to' => " <br>\n");
 
 $efef_md[] = array( 'name' => 'h2b', 'from' => '/\n\n([^\n]+?)\n---+\n/s' , 'to' => "\n\n<h2>$1</h2>\n");
@@ -184,7 +182,7 @@ function efef_make_toc($text)
   */
 
   $toc_text = "\n<div class=\"toc\">\n<h2>Table of Contents</h2>\n";
-  $toc_text .= "\n<div>embedded</div>\n<ul>\n";
+  $toc_text .= "\n<div class=\"embed\">embedded</div>\n<ul>\n";
   $num_matches = preg_match_all($toc_aname_regex, $text, $matches, PREG_SET_ORDER);
   for ($i=0; $i<$num_matches; $i++) {
     $toc_anchor = trim($matches[$i][1]);
