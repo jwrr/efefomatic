@@ -71,7 +71,7 @@ function efef_remove_yaml($text)
 
 // ============================================================================
 
-function efef_200_yaml($efef_hash)
+function efef_yaml($efef_hash)
 {
   // parse yaml from text file. yaml fields stored in $efef_hash.
   $efef_hash = efef_get_yaml($efef_hash);
@@ -84,6 +84,6 @@ function efef_200_yaml($efef_hash)
 
 
 // Extract front matter fields
-$efef_hash = efef_200_yaml($efef_hash);
+$efef_hash = efef_yaml($efef_hash);
 
 

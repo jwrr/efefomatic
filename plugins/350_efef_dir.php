@@ -6,7 +6,7 @@ This work is licensed under the terms of the MIT license.
 For a copy, see <https://opensource.org/licenses/MIT>.
 */
 
-function efef_350_dir($filter='*')
+function efef_dir($filter='*')
 {
   $glob = glob($filter, GLOB_ONLYDIR);
   $html = "\n<ul>";
@@ -18,5 +18,5 @@ function efef_350_dir($filter='*')
   return $html;
 }
 
-$efef_hash['dir'] = efef_350_dir();
+$efef_hash['dir'] = efef_dir();
 
