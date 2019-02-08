@@ -24,18 +24,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-
 function efefomatic($file_path = ".")
 {
   $efef_hash['html'] = '';
 
+  $efef_hash['page_url'] = "//$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
   $efef_hash['file_path'] = $file_path;
   $efef_hash['efef_path'] = dirname(__FILE__);
+  $efef_hash['blog_path'] = dirname($efef_hash['efef_path']);
   $slash = DIRECTORY_SEPARATOR;
   $efef_hash['themes_path']  = $efef_hash['efef_path'] . $slash . "themes";
 
   $efef_hash['plugins_path'] = $efef_hash['efef_path'] . $slash . "plugins";
-  $plugins_list = glob($efef_hash['plugins_path'] . $slash . "efef_*.php");
+  $plugins_list = glob($efef_hash['plugins_path'] . $slash . "*efef_*.php");
 
   foreach ($plugins_list as $plugin) {
     include($plugin);
