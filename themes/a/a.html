@@ -7,6 +7,8 @@
 <meta name="author" content="{{ author }}">
 <link rel="stylesheet" href="{{ css }}">
 <style>
+body {font-size: 18px;}
+
 /* from https://meta.superuser.com/questions/4788/css-for-the-new-kbd-style */
 kbd{
  -moz-border-radius:3px;
@@ -27,32 +29,32 @@ kbd{
  text-shadow:0 1px 0 #fff;
 }
 
-.wrapper {margin:0 auto; font-family: Arial, sans-serif; line-height:1.5em; min-width:480px; max-width:960px; }
-header { color: #ddd; background: #055; border: 1px solid #aaaaaa; margin:0; padding:0.5em 0.4em 0.4em 1em; }
+.wrapper {margin:0 auto; font-family: Arial, sans-serif; line-height:1.6em; min-width:480px; max-width:960px; }
+header { color: #555; background: #f8f8f8; border: 1px solid #aaaaaa; margin:0; padding:0.5em 0.4em 0.4em 1em; }
 header img { height: 4em; float:right; }
 blockquote {margin: 1em auto 1em auto; text-align:center; font-style:italic; color:#E67E22; }
 
-article {box-sizing: border-box;width:calc(100% - 160px); float:left; padding:0 10px 0 0;font-size:1.0em;color:#413;}
+article {box-sizing: border-box;width:calc(100% - 160px); float:left; padding:0 10px 0 0;font-size:1.0em;color:#534;}
 
 article > h2 {margin: 2em 0 1em 0;}
 article > hr {margin: 3em 0 1em 0;}
 article img {display:block; margin:1em auto 1em auto; width:95%;}
-article > img:first-child {display:inline-block; float:left; width:25%; min-width:180px; margin: 0.5em 1em 0.5em 0;}
+article > img:first-child {display:inline-block; float:left; width:40%; min-width:180px; max-width:300px; margin: 0.5em 1em 0.5em 0;}
 article > .intro {font-size:1.2em;color:#666;}
 article a {color:#3163b2;}
 article a:visited {color:#8f53e2;}
-article > pre > code {background:#056;color:#bbb;font-weight:bolder;}
+article > pre > code {background:#136;color:#ccc;font-weight:bolder;font-size:0.8em;}
 
 code {margin:0; padding:0 0.5em 0 0.5em; border-width:1px; border-style:solid; border-color:#ccc; background:#f0f0f0; overflow-x:auto; font-family: "Courier New", Courier, monospace; }
-pre code {display:block; margin:0; font-size:0.9em; border-width:3px 3px 3px 4px; border-style:solid; border-color:#ccc; border-radius:1em 1em 1em 1em; overflow-x:auto; font-family: "Courier New", Courier, monospace; line-height:1.3em; padding: 0 1em 1em 1em; }
+pre code {display:block; margin:0; font-size:12px; border-width:2px; border-style:solid; border-color:#aaa; border-radius:0.5em; overflow-x:auto; font-family: "Courier New", Courier, monospace; line-height:1.3em; padding: 0 1em 1em 1em; }
 
-.leader {width:100%; height:90px; background-color:#cccccc;}
+.leader {box-sizing:border-box;width:100%; height:90px; background-color:rgb(250,250,250);color:rgb(150,150,150);padding:0.2em 1em;}
 .embedded1 {width:336px; height:280px; background-color:#cccccc; float:right; margin:0.4em 0 0.5em 1em;}
-.toc > .embed {width:300px; height:250px; background-color:#cccccc; float:right; margin:0.4em 0 0.5em 1em;}
+.toc > .embed {width:300px; height:250px; background-color:rgb(240,240,240); float:right; margin:0.4em 0 0.5em 1em;}
 .toc li {margin:0 0 0.6em 0; font-size: 1.1em;}
 .embedded3 {width:180px; height:1500px; background-color:#cccccc; float:right; margin:0.4em 0 0.5em 1em;}
 
-aside {float:right; width:160px; margin:0; background-color:#eeeeee; height:10000px; }
+aside {box-sizing:border-box; float:right; width:160px; margin:0; padding: 0 0 0 1em; background-color:#eee; height:10000px; }
 
 article {counter-reset: h2cnt;}
 article > h2 {counter-reset:h3cnt; counter-reset:h4cnt; counter-reset:h5cnt; counter-reset:h6cnt;}
@@ -66,13 +68,22 @@ article > h4:before {counter-increment: h4cnt; content: counter(h2cnt) "." count
 article > h5:before {counter-increment: h5cnt; content: counter(h2cnt) "." counter(h3cnt) "." counter(h4cnt) "." counter(h5cnt) ". "; }
 article > h6:before {counter-increment: h6cnt; content: counter(h2cnt) "." counter(h3cnt) "." counter(h4cnt) "." counter(h5cnt) "." counter(h6cnt)". "; }
 
-@media screen and (max-width: 520px) {
- article img:first-child {display:block;float:initial;margin:0.5em auto 0.5em auto;}
- article > .intro {font-size:1.0em;}
- .toc li {font-size:1.0em};
+.wrapper {min-width:320px; max-width:1280px; }
+article {width:75%; max-width:calc(100% - 180px); }
+aside {width:25%; min-width:180px; }
+
+@media screen and (max-width: 500px) {
+ article {width:100%; max-width:100%;}
+ aside {width:100%;}
 }
 
 @media screen and (max-width: 700px) {
+ article img:first-child {display:block;float:initial;margin:0.5em auto 0.5em auto;width:280px;}
+ article > .intro {font-size:1.0em;}
+ .toc li {font-size:1.0em;}
+}
+
+@media screen and (max-width: 800px) {
  .toc > .embed {float:initial; margin:0.4em auto 0.5em auto;}
 }
 
@@ -96,6 +107,7 @@ article > h6:before {counter-increment: h6cnt; content: counter(h2cnt) "." count
 
 
 <aside>
+{{ recent }}
 </aside>
 </div>
 </body>
