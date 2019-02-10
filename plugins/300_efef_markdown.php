@@ -162,20 +162,18 @@ $efef_rex[] = array( 'name' => 'oli', 'from' => '/\n\d+[.)] \s*(.*?)(?=\n)/s' , 
 
 // ============================================================================
 
-function efef_preg_replace($efef_md_text, $efef_rex)
+function efef_markdown($efef_md_text, $efef_rex)
 {
-  $html_text = $efef_md_text;
+  $result_text = $efef_md_text;
   foreach ($efef_rex as $replace) {
     $name = $replace['name'];
     $from = $replace['from'];
     $to   = $replace['to'];
 
-    ### print "RRR: $name $from $to <br>\n";
-    $html_text = preg_replace($from, $to, $html_text);
-    ### print "SSS: $name $from $to <br>\n";
+    $result_text = preg_replace($from, $to, $result_text);
   }
-  return $html_text;
+  return $result_text;
 }
 
-$efef_hash['content'] = efef_preg_replace($efef_hash['content'], $efef_rex);
+$efef_hash['content'] = efef_markdown($efef_hash['content'], $efef_rex);
 

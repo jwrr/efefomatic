@@ -23,7 +23,7 @@ function efef_replacer_str($template_text, $efef_hash)
 
 // ============================================================================
 
-function efef_replacer_file($efef_hash)
+function efef_template($efef_hash)
 {
   if (!array_key_exists('theme', $efef_hash)) {
     $template_path = $efef_hash['themes_path'] . DIRECTORY_SEPARATOR . 'a';
@@ -48,5 +48,5 @@ function efef_replacer_file($efef_hash)
 $efef_hash['content'] = efef_replacer_str($efef_hash['content'], $efef_hash);
 
 // apply content to template (template path stored in $efef_hash
-$efef_hash['html'] = efef_replacer_file($efef_hash);
+$efef_hash['html'] = efef_template($efef_hash);
 
