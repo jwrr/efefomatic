@@ -29,11 +29,14 @@ kbd{
  text-shadow:0 1px 0 #fff;
 }
 
+li {line-height:initial; margin-bottom:0.6em;}
+
 .wrapper {margin:0 auto; font-family: Arial, sans-serif; line-height:1.6em; min-width:480px; max-width:960px; }
 header { color: #555; background: #f8f8f8; border: 1px solid #aaaaaa; margin:0; padding:0.5em 0.4em 0.4em 1em; }
 header img { height: 4em; float:right; }
 blockquote {margin: 1em auto 1em auto; text-align:center; font-style:italic; color:#E67E22; }
-
+/*ul {padding-left:0px;}
+*/
 article {box-sizing: border-box;width:calc(100% - 160px); float:left; padding:0 10px 0 0;font-size:1.0em;color:#534;}
 
 article > h2 {margin: 2em 0 1em 0;}
@@ -51,10 +54,9 @@ pre code {display:block; margin:0; font-size:12px; border-width:2px; border-styl
 .leader {box-sizing:border-box;width:100%; height:90px; background-color:rgb(250,250,250);color:rgb(150,150,150);padding:0.2em 1em;}
 .embedded1 {width:336px; height:280px; background-color:#cccccc; float:right; margin:0.4em 0 0.5em 1em;}
 .toc > .embed {width:300px; height:250px; background-color:rgb(240,240,240); float:right; margin:0.4em 0 0.5em 1em;}
-.toc li {margin:0 0 0.6em 0; font-size: 1.1em;}
-.embedded3 {width:180px; height:1500px; background-color:#cccccc; float:right; margin:0.4em 0 0.5em 1em;}
+.toc li {font-size: 1.1em;}
 
-aside {box-sizing:border-box; float:right; width:160px; margin:0; padding: 0 0 0 1em; background-color:#eee; height:10000px; }
+.embedded3 {width:180px; height:1500px; background-color:#cccccc; float:right; margin:0.4em 0 0.5em 1em;}
 
 article {counter-reset: h2cnt;}
 article > h2 {counter-reset:h3cnt; counter-reset:h4cnt; counter-reset:h5cnt; counter-reset:h6cnt;}
@@ -70,11 +72,15 @@ article > h6:before {counter-increment: h6cnt; content: counter(h2cnt) "." count
 
 .wrapper {min-width:320px; max-width:1280px; }
 article {width:75%; max-width:calc(100% - 180px); }
+
+aside {box-sizing:border-box; float:right; margin:0; padding: 0 0 0 0; background-color:#eee; height:10000px; }
 aside {width:25%; min-width:180px; }
 
-@media screen and (max-width: 500px) {
- article {width:100%; max-width:100%;}
- aside {width:100%;}
+aside > .recent {margin:1em 10% 1em 10%; font-size:0.8em;}
+aside > .recent > ul {list-style-type:none;padding-left:0.2em;}
+
+@media screen and (max-width: 800px) {
+ .toc > .embed {float:initial; margin:0.4em 1em 0.5em 0;}
 }
 
 @media screen and (max-width: 700px) {
@@ -83,8 +89,9 @@ aside {width:25%; min-width:180px; }
  .toc li {font-size:1.0em;}
 }
 
-@media screen and (max-width: 800px) {
- .toc > .embed {float:initial; margin:0.4em auto 0.5em auto;}
+@media screen and (max-width: 520px) {
+ article {width:100%; max-width:100%;}
+ aside {width:100%;}
 }
 
 </style>
