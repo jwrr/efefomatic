@@ -6,15 +6,17 @@ This work is licensed under the terms of the MIT license.
 For a copy, see <https://opensource.org/licenses/MIT>.
 */
 
-function efef_400_replacer_str($template_text, $efef_hash)
+function efef_replacer_str($template_text, $efef_hash)
 {
   $num_matches = preg_match_all('/{{\s*(.*?)\s*}}/' , $template_text , $matches,  PREG_SET_ORDER);
+  $uniq = array();
   for ($i=0; $i<$num_matches; $i++) {
     $uniq[$matches[$i][1]]++;
   }
-  foreach ($uniq as $key => $value) {
-    // print "key = '$key', value='$value'<br>\n";
-    $template_text = preg_replace('/{{\s*' . $key . '\s*}}/' , $efef_hash[$key] , $template_text);
+  $embedded_variables = array_keys($uniq);
+  foreach ($embedded_variables as $var) {
+    // echo "var = '$var'<br>\n";
+    $template_text = preg_replace('/{{\s*' . $var . '\s*}}/' , $efef_hash[$var] , $template_text);
   }
   return $template_text;
 }
@@ -38,12 +40,12 @@ function efef_replacer_file($efef_hash)
     $efef_hash['css'] = $template_path . DIRECTORY_SEPARATOR . $template_name . '.css';
   }
 
-  $final_text = efef_400_replacer_str($template_text, $efef_hash);
+  $final_text = efef_replacer_str($template_text, $efef_hash);
   return $final_text;
 }
 
 // expand embedded fields such as {{toc}}. $efef_hash has from/to definitions
-$efef_hash['content'] = efef_400_replacer_str($efef_hash['content'], $efef_hash);
+$efef_hash['content'] = efef_replacer_str($efef_hash['content'], $efef_hash);
 
 // apply content to template (template path stored in $efef_hash
 $efef_hash['html'] = efef_replacer_file($efef_hash);

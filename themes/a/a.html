@@ -31,7 +31,7 @@ kbd{
 
 li {line-height:initial; margin-bottom:0.6em;}
 
-.wrapper {margin:0 auto; font-family: Arial, sans-serif; line-height:1.6em; min-width:480px; max-width:960px; }
+.wrapper {margin:0 auto; font-family: Arial, sans-serif; line-height:1.6em; min-width:480px; max-width:960px;}
 header { color: #555; background: #f8f8f8; border: 1px solid #aaaaaa; margin:0; padding:0.5em 0.4em 0.4em 1em; }
 header img { height: 4em; float:right; }
 blockquote {margin: 1em auto 1em auto; text-align:center; font-style:italic; color:#E67E22; }
@@ -73,11 +73,22 @@ article > h6:before {counter-increment: h6cnt; content: counter(h2cnt) "." count
 .wrapper {min-width:320px; max-width:1280px; }
 article {width:75%; max-width:calc(100% - 180px); }
 
-aside {box-sizing:border-box; float:right; margin:0; padding: 0 0 0 0; background-color:#eee; height:10000px; }
+aside {box-sizing:border-box; float:right; margin:0; padding: 0 0 0 0; background-color:#ddd; height:10000px; }
 aside {width:25%; min-width:180px; }
 
 aside > .recent {margin:1em 10% 1em 10%; font-size:0.8em;}
 aside > .recent > ul {list-style-type:none;padding-left:0.2em;}
+
+/*
+<form method="get" class="search_box">
+   <span class="search_box_icon">&#x2315;</span><input type="search" placeholder=" Search this website &#x2315;" value="" name="search" />
+   <button type="submit" <span class="screen-reader-text">&#x2315;Search</span></button>
+</form>
+*/
+
+.search-form {margin: 1em auto 1em auto; width:80%;}
+.search-form > input {width:100%;padding:0.6em 0.6em 0.6em 0.6em; border-radius:10px;}
+.search-form > button {display: none;}
 
 @media screen and (max-width: 800px) {
  .toc > .embed {float:initial; margin:0.4em 1em 0.5em 0;}
@@ -114,6 +125,11 @@ aside > .recent > ul {list-style-type:none;padding-left:0.2em;}
 
 
 <aside>
+
+
+{{ search_form }}
+
+
 {{ recent }}
 </aside>
 </div>
