@@ -7,6 +7,7 @@ date: January 13, 2019
 theme: a
 ...
 
+[View markdown](README.md)
 # Efefomatic
 ## Description
 Efefomatic is a Flat File CMS providing:

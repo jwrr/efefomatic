@@ -117,8 +117,10 @@ $efef_rex[] = array( 'name' => 'sup2',   'from' => "/(\S)\^(.+?)\^/s"  , 'to' =>
 
 $efef_rex[] = array( 'name' => 'quote',  'from' => "/([^'])''([^'])/s"  , 'to' => '$1&apos;$2');
 
+//$efef_rex[] = array( 'name' => 'video',  'from' => "/<iframe\s*wid.*?height.*?(src.*?iframe.)/s"  ,
+//'to' => '<div style="position:relative; width:100%; max-width:560px; height:0px; padding-bottom:56.25%;"><iframe style="position:absolute; left:0; top:0; width:100%; height:100%" $1</div>');
 $efef_rex[] = array( 'name' => 'video',  'from' => "/<iframe\s*wid.*?height.*?(src.*?iframe.)/s"  ,
-'to' => '<div style="position:relative; width:100%; max-width:560px; height:0px; padding-bottom:56.25%;"><iframe style="position:absolute; left:0; top:0; width:100%; height:100%" $1</div>');
+'to' => '<div style="position:relative; width:320px; height:180px;"><iframe style="position:absolute; left:0; top:0; width:100%; height:100%" $1</div>');
 
 $efef_rex[] = array( 'name' => 'aname1', 'from' => "/(<h.>)@\s*([^<\s]+)(.*?<.h.>)/s"  , 'to' => "\n" . '<a name="$2"></a>' . "\n" . '$1$2$3');
 $efef_rex[] = array( 'name' => 'aname2', 'from' => "/(<h.>)\s*([^<(]+)\((.*?)\)(\s*<.h.>)/s" , 'to' => "\n" . '<a name="$3"></a>' . "\n" . '$1$2$4');
